@@ -39,7 +39,7 @@ const TodoApp = () => {
 
   return (
     <div style={{ maxWidth: "600px", margin: "auto", padding: "20px" }}>
-      <h2>📝 My Todo List</h2>
+      <h2>My Todo List</h2>
 
       <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
         <input
