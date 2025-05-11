@@ -16,10 +16,7 @@ COPY . .
 # 6. Prisma client'ı oluştur
 RUN npx prisma generate
 
-# 7. Veritabanı tablolarını oluştur (migrate deploy)
-RUN npx prisma migrate deploy
-
-# 8. TypeScript'ten JavaScript'e derle
+# 7. TypeScript'ten JavaScript'e derle
 RUN npm run build
 
 # 9. Uygulama portunu expose et

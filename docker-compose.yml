@@ -11,7 +11,7 @@ services:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/tododb
     volumes:
       - ./server:/app
-    command: sh -c "npx prisma generate && npm run build && npm start"
+    command: sh -c "npx prisma generate && npx prisma migrate deploy && npm run build && npm start"
 
   client:
     build: ./client
