@@ -1,26 +1,29 @@
 # 1. Node.js tabanlı bir image kullan
 FROM node:18
 
-# 2. Çalışma dizinini belirle
+# 2. Uygulama çalışma dizinini oluştur
 WORKDIR /app
 
-# 3. package.json ve lock dosyasını kopyala
+# 3. package.json ve package-lock.json'u kopyala
 COPY package*.json ./
 
 # 4. Bağımlılıkları yükle
 RUN npm install
 
-# 5. Uygulama kodlarını ve Prisma dosyalarını kopyala
+# 5. Projedeki tüm dosyaları kopyala (src, prisma, vs.)
 COPY . .
 
-# 6. Prisma client dosyalarını oluştur
+# 6. Prisma client'ı oluştur
 RUN npx prisma generate
 
-# 7. TypeScript ile build al (dist klasörüne)
+# 7. Veritabanı tablolarını oluştur (migrate deploy)
+RUN npx prisma migrate deploy
+
+# 8. TypeScript'ten JavaScript'e derle
 RUN npm run build
 
-# 8. Express portunu aç
+# 9. Uygulama portunu expose et
 EXPOSE 5000
 
-# 9. Uygulamayı başlat
+# 10. Uygulama başlatma komutu
 CMD ["node", "dist/server.js"]
