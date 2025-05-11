@@ -10,14 +10,17 @@ COPY package*.json ./
 # 4. Bağımlılıkları yükle
 RUN npm install
 
-# 5. Uygulama kodlarını kopyala
+# 5. Uygulama kodlarını ve Prisma dosyalarını kopyala
 COPY . .
 
-# 6. TypeScript ile derle
+# 6. Prisma client dosyalarını oluştur
+RUN npx prisma generate
+
+# 7. TypeScript ile build al (dist klasörüne)
 RUN npm run build
 
-# 7. Port tanımı (Express genelde 5000)
+# 8. Express portunu aç
 EXPOSE 5000
 
-# 8. Container başladığında çalışacak komut
+# 9. Uygulamayı başlat
 CMD ["node", "dist/server.js"]
