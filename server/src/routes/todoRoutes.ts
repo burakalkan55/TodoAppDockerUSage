@@ -13,7 +13,10 @@ router.get("/", async (_req: Request, res: Response) => {
     res.json(todos);
   } catch (error) {
     console.error("GET /api/todos error:", error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ 
+      message: "Internal server error", 
+      error: error instanceof Error ? error.message : String(error)
+    });
   }
 });
 

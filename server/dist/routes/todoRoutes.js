@@ -22,7 +22,10 @@ router.get("/", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     catch (error) {
         console.error("GET /api/todos error:", error);
-        res.status(500).json({ message: "Internal server error" });
+        res.status(500).json({
+            message: "Internal server error",
+            error: error instanceof Error ? error.message : String(error)
+        });
     }
 }));
 router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
