@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  server:
+    build: ./server
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/tododb
+    volumes:
+      - ./server:/app
+    command: sh -c "npx prisma generate && npm run build && npm start"
+
+  client:
+    build: ./client
+    ports:
+      - "5173:4173"
+    depends_on:
+      - server
+
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: tododb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
