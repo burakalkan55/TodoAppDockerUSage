@@ -13,10 +13,13 @@ RUN npm install
 # 5. Projedeki tüm dosyaları kopyala (src, prisma, vs.)
 COPY . .
 
-# 6. Prisma client'ı oluştur
+# 6. Environment variables
+ENV DATABASE_URL=postgresql://postgres:postgres@db:5432/tododb
+
+# 7. Prisma client'ı oluştur
 RUN npx prisma generate
 
-# 7. TypeScript'ten JavaScript'e derle
+# 8. TypeScript'ten JavaScript'e derle
 RUN npm run build
 
 # 9. Uygulama portunu expose et
