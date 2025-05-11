@@ -8,14 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const client_1 = require("@prisma/client");
+const prisma_1 = __importDefault(require("../lib/prisma"));
 const router = (0, express_1.Router)();
-const prisma = new client_1.PrismaClient();
 router.get("/", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const todos = yield prisma.todo.findMany({ orderBy: { id: "desc" } });
+        const todos = yield prisma_1.default.todo.findMany({ orderBy: { id: "desc" } });
         res.json(todos);
     }
     catch (error) {
@@ -29,7 +31,7 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!title || typeof title !== "string") {
             return res.status(400).json({ message: "Title is required" });
         }
-        const newTodo = yield prisma.todo.create({
+        const newTodo = yield prisma_1.default.todo.create({
             data: { title, completed: false },
         });
         res.status(201).json(newTodo);
